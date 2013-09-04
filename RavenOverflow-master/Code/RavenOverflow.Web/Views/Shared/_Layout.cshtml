@@ -1,0 +1,79 @@
+﻿@using RavenOverflow.Web.Models
+@model _LayoutViewModel
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>Raven Overflow</title>
+
+    <link rel="shortcut icon" href="http://cdn.sstatic.net/stackoverflow/img/favicon.ico">
+    <link rel="apple-touch-icon" href="http://cdn.sstatic.net/stackoverflow/img/apple-touch-icon.png">
+    <link href="@Url.Content("/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/cupertino/jquery-ui.css" type="text/css" rel="Stylesheet" />
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+
+</head>
+<body class="home-page">
+
+    @Raven.Client.MvcIntegration.RavenProfiler.CurrentRequestSessions();
+
+    <noscript><div id="noscript-padding"></div></noscript>
+
+    @Html.Partial("_MainNavigation", new _MainNavigationViewModel { AuthenticationViewModel = Model.AuthenticationViewModel})
+
+    <div id="notify-container"></div>
+    <div id="overlay-header"></div>
+    <div id="custom-header"></div>
+    <div class="container">
+        <div id="header">
+            
+            <div id="hlinks">
+                @Html.Partial("_Authentication", Model.AuthenticationViewModel)
+            </div>
+            <div id="hsearch">
+                @Html.Partial("_TagSearch")
+            </div>
+
+            <br class="cbt">
+
+            <div id="hlogo">
+                <img src="/Content/logo-ravendb.png" alt="RavenDb"/>
+            </div>
+
+            <div id="hmenus">
+                <div class="nav askquestion">
+                    <ul>
+                        <li>
+                            @Html.ActionLink("Ask a Question", "Create", "Questions")
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="content">
+            <div id="mainbar">
+                <div class="subheader">
+                    <h1 id="h-top-questions">@RenderSection("Header")</h1>
+                    <div id="tabs">
+                        interesting | featured | hot | week | month
+                    </div>
+                </div>
+                <div id="question-mini-list">
+                    @RenderBody()
+                </div>
+
+                <h2 class="bottom-notice">Looking for more? Goto the real <a href="http://stackoverflow.com">Stack Overflow site</a>.</h2>
+            </div>
+        
+            <div id="sidebar">
+                @RenderSection("SideBar", false)
+            </div>
+        </div>
+    </div>
+
+    
+    @RenderSection("JavaScript", false);
+</body>
+</html>

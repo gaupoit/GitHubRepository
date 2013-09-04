@@ -1,0 +1,21 @@
+﻿@using RavenOverflow.Web.Models.ViewModels
+@model TagListViewModel
+
+@if (Model == null || Model.Tags == null || Model.Tags.Count <= 0)
+{
+    <p>No tags</p>
+}
+else
+{
+    bool isFirstTag = true;
+    foreach (string tag in Model.Tags)
+    {
+        if (!isFirstTag)
+        {
+            @:&nbsp;
+        }
+        isFirstTag = false;
+        string classText = String.Format("post-tag{0}", Model.IsUserTags ? " user-tag" : string.Empty);
+        @Html.ActionLink(tag, "Index", "Home", new {tag}, new {@class = classText, title = "show questions tagged " + tag, rel = "tag"})
+    }
+}

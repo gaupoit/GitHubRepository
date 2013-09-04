@@ -1,0 +1,29 @@
+﻿@using RavenOverflow.Web.Models.ViewModels
+@model IndexViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Header 
+{
+    @Model.Header
+}
+
+@section SideBar
+{
+    @if (Model != null)
+    {
+        Html.RenderPartial("_UserTagList", Model.UserFavoriteTagListViewModel);
+        Html.RenderPartial("_UserTagList", Model.UserIgnoredTagList);
+        Html.RenderPartial("_TagListVertical", Model.RecentPopularTags);
+    }
+}
+
+@if (Model == null)
+{
+    <p>No questions have been asked.</p>
+}
+else
+{
+    Html.RenderPartial("_QuestionList", Model.QuestionListViewModel);
+}
